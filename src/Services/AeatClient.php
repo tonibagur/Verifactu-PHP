@@ -40,6 +40,9 @@ class AeatClient {
         $this->taxpayer = $taxpayer;
         $this->client = new Client([
             'cert' => ($certPassword === null) ? $certPath : [$certPath, $certPassword],
+            'headers' => [
+                'User-Agent' => "Mozilla/5.0 (compatible; {$system->name}/{$system->version})",
+            ],
         ]);
     }
 
