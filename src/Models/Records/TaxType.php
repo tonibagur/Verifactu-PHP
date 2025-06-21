@@ -1,5 +1,5 @@
 <?php
-namespace Verifactu\Models\Records;
+namespace josemmo\Verifactu\Models\Records;
 
 enum TaxType: string {
     /** Impuesto sobre el Valor Añadido (IVA) */

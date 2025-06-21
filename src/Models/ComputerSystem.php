@@ -1,5 +1,5 @@
 <?php
-namespace Verifactu\Models;
+namespace josemmo\Verifactu\Models;
 
 use Symfony\Component\Validator\Constraints as Assert;
 

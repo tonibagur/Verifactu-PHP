@@ -1,15 +1,15 @@
 <?php
-namespace Verifactu\Tests\Models\Records;
+namespace josemmo\Verifactu\Tests\Models\Records;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
-use Verifactu\Models\Records\BreakdownDetails;
-use Verifactu\Models\Records\InvoiceIdentifier;
-use Verifactu\Models\Records\InvoiceType;
-use Verifactu\Models\Records\OperationType;
-use Verifactu\Models\Records\RegimeType;
-use Verifactu\Models\Records\RegistrationRecord;
-use Verifactu\Models\Records\TaxType;
+use josemmo\Verifactu\Models\Records\BreakdownDetails;
+use josemmo\Verifactu\Models\Records\InvoiceIdentifier;
+use josemmo\Verifactu\Models\Records\InvoiceType;
+use josemmo\Verifactu\Models\Records\OperationType;
+use josemmo\Verifactu\Models\Records\RegimeType;
+use josemmo\Verifactu\Models\Records\RegistrationRecord;
+use josemmo\Verifactu\Models\Records\TaxType;
 
 final class RegistrationRecordTest extends TestCase {
     public function testCalculatesHashForFirstRecord(): void {

@@ -1,12 +1,12 @@
 <?php
-namespace Verifactu\Services;
+namespace josemmo\Verifactu\Services;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use UXML\UXML;
-use Verifactu\Models\ComputerSystem;
-use Verifactu\Models\Records\FiscalIdentifier;
-use Verifactu\Models\Records\RegistrationRecord;
+use josemmo\Verifactu\Models\ComputerSystem;
+use josemmo\Verifactu\Models\Records\FiscalIdentifier;
+use josemmo\Verifactu\Models\Records\RegistrationRecord;
 
 /**
  * Class to communicate with the AEAT web service endpoint for VERI*FACTU

@@ -1,5 +1,5 @@
 <?php
-namespace Verifactu\Models\Records;
+namespace josemmo\Verifactu\Models\Records;
 
 enum InvoiceType: string {
     /** Factura (Art. 6, 7.2 y 7.3 del R.D. 1619/2012) */

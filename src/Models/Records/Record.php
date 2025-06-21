@@ -1,10 +1,10 @@
 <?php
-namespace Verifactu\Models\Records;
+namespace josemmo\Verifactu\Models\Records;
 
 use DateTimeImmutable;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use Verifactu\Models\Model;
+use josemmo\Verifactu\Models\Model;
 
 /**
  * Base invoice record
