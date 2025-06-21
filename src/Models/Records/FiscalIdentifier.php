@@ -12,6 +12,24 @@ use Verifactu\Models\Model;
  */
 class FiscalIdentifier extends Model {
     /**
+     * Class constructor
+     *
+     * @param string|null $name Name
+     * @param string|null $nif  NIF
+     */
+    public function __construct(
+        ?string $name = null,
+        ?string $nif = null,
+    ) {
+        if ($name !== null) {
+            $this->name = $name;
+        }
+        if ($nif !== null) {
+            $this->nif = $nif;
+        }
+    }
+
+    /**
      * Nombre-razón social
      *
      * @field NombreRazon

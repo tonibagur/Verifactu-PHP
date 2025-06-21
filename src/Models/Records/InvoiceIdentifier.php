@@ -10,6 +10,29 @@ use Verifactu\Models\Model;
  */
 class InvoiceIdentifier extends Model {
     /**
+     * Class constructor
+     *
+     * @param string|null            $issuerId      Issuer ID
+     * @param string|null            $invoiceNumber Invoice number
+     * @param DateTimeImmutable|null $issueDate     Issue date
+     */
+    public function __construct(
+        ?string $issuerId = null,
+        ?string $invoiceNumber = null,
+        ?DateTimeImmutable $issueDate = null,
+    ) {
+        if ($issuerId !== null) {
+            $this->issuerId = $issuerId;
+        }
+        if ($invoiceNumber !== null) {
+            $this->invoiceNumber = $invoiceNumber;
+        }
+        if ($issueDate !== null) {
+            $this->issueDate = $issueDate;
+        }
+    }
+
+    /**
      * Número de identificación fiscal (NIF) del obligado a expedir la factura
      *
      * @field IDFactura/IDEmisorFactura
