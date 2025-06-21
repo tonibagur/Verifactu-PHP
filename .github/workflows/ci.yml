@@ -10,10 +10,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['8.2', '8.3']
+        php-version: ['8.2', '8.3', '8.4']
         include:
-          - php-version: '8.4'
-            deploy: ${{ github.ref == 'refs/heads/main' }}
           - php-version: '8.5'
             experimental: true
     steps:
@@ -38,4 +36,4 @@ jobs:
 
       # Run tests
       - name: Run tests
-        run: composer tests
+        run: composer test
