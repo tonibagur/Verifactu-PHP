@@ -3,13 +3,15 @@ namespace Verifactu\Models\Records;
 
 use DateTimeImmutable;
 use Symfony\Component\Validator\Constraints as Assert;
+use Verifactu\Models\Model;
 
 /**
  * Identificador de factura
  */
-class InvoiceIdentifier {
+class InvoiceIdentifier extends Model {
     /**
      * Número de identificación fiscal (NIF) del obligado a expedir la factura
+     *
      * @field IDFactura/IDEmisorFactura
      */
     #[Assert\NotBlank]
@@ -18,6 +20,7 @@ class InvoiceIdentifier {
 
     /**
      * Nº Serie + Nº Factura que identifica a la factura emitida
+     *
      * @field IDFactura/NumSerieFactura
      */
     #[Assert\NotBlank]
@@ -27,7 +30,7 @@ class InvoiceIdentifier {
     /**
      * Fecha de expedición de la factura
      *
-     * NOTE: Will ignore the time.
+     * NOTE: Time part will be ignored.
      *
      * @field IDFactura/FechaExpedicionFactura
      */

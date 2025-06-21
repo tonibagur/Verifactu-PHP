@@ -12,6 +12,7 @@ use Verifactu\Models\Model;
 abstract class Record extends Model {
     /**
      * ID de factura
+     *
      * @field IDFactura
      */
     #[Assert\NotBlank]
@@ -20,6 +21,7 @@ abstract class Record extends Model {
 
     /**
      * ID de factura del registro anterior
+     *
      * @field Encadenamiento/RegistroAnterior
      */
     #[Assert\Valid]
@@ -27,6 +29,7 @@ abstract class Record extends Model {
 
     /**
      * Primeros 64 caracteres de la huella o hash del registro de facturación anterior
+     *
      * @field Encadenamiento/RegistroAnterior/Huella
      */
     #[Assert\Regex(pattern: '/^[0-9A-F]{64}$/')]
@@ -34,6 +37,7 @@ abstract class Record extends Model {
 
     /**
      * Huella o hash de cierto contenido de este registro de facturación
+     *
      * @field Huella
      */
     #[Assert\NotBlank]
@@ -42,6 +46,7 @@ abstract class Record extends Model {
 
     /**
      * Fecha, hora y huso horario de generación del registro de facturación
+     *
      * @field FechaHoraHusoGenRegistro
      */
     #[Assert\NotBlank]
@@ -49,6 +54,7 @@ abstract class Record extends Model {
 
     /**
      * Calculate record hash
+     *
      * @return string Expected record hash
      */
     abstract public function calculateHash(): string;

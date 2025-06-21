@@ -5,11 +5,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Computer system
+ *
  * @field SistemaInformatico
  */
 class ComputerSystem extends Model {
     /**
      * Nombre-razón social de la persona o entidad productora
+     *
      * @field NombreRazon
      */
     #[Assert\NotBlank]
@@ -18,6 +20,7 @@ class ComputerSystem extends Model {
 
     /**
      * NIF de la persona o entidad productora
+     *
      * @field NIF
      */
     #[Assert\NotBlank]
@@ -26,6 +29,7 @@ class ComputerSystem extends Model {
 
     /**
      * Nombre dado por la persona o entidad productora a su sistema informático de facturación (SIF)
+     *
      * @field NombreSistemaInformatico
      */
     #[Assert\NotBlank]
@@ -34,6 +38,7 @@ class ComputerSystem extends Model {
 
     /**
      * Código identificativo dado por la persona o entidad productora a su sistema informático de facturación (SIF)
+     *
      * @field IdSistemaInformatico
      */
     #[Assert\NotBlank]
@@ -42,6 +47,7 @@ class ComputerSystem extends Model {
 
     /**
      * Identificación de la versión del sistema informático de facturación (SIF)
+     *
      * @field Version
      */
     #[Assert\NotBlank]
@@ -50,6 +56,7 @@ class ComputerSystem extends Model {
 
     /**
      * Número de instalación del sistema informático de facturación (SIF) utilizado
+     *
      * @field NumeroInstalacion
      */
     #[Assert\NotBlank]
@@ -58,6 +65,7 @@ class ComputerSystem extends Model {
 
     /**
      * Especifica si solo puede funcionar como "VERI*FACTU" o también puede funcionar como "no VERI*FACTU" (offline)
+     *
      * @field TipoUsoPosibleSoloVerifactu
      */
     #[Assert\Type('boolean')]
@@ -65,7 +73,7 @@ class ComputerSystem extends Model {
 
     /**
      * Especifica si permite llevar independientemente la facturación de varios obligados tributarios
-
+     *
      * @field TipoUsoPosibleMultiOT
      */
     #[Assert\Type('boolean')]
@@ -73,6 +81,7 @@ class ComputerSystem extends Model {
 
     /**
      * En el momento de la generación de este registro, está soportando la facturación de más de un obligado tributario
+     *
      * @field IndicadorMultiplesOT
      */
     #[Assert\Type('boolean')]

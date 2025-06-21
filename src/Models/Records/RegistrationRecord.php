@@ -5,11 +5,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Registro de alta de una factura
+ *
  * @field RegistroAlta
  */
 class RegistrationRecord extends Record {
     /**
      * Nombre-razón social del obligado a expedir la factura
+     *
      * @field NombreRazonEmisor
      */
     #[Assert\NotBlank]
@@ -18,6 +20,7 @@ class RegistrationRecord extends Record {
 
     /**
      * Especificación del tipo de factura
+     *
      * @field TipoFactura
      */
     #[Assert\NotBlank]
@@ -25,6 +28,7 @@ class RegistrationRecord extends Record {
 
     /**
      * Descripción del objeto de la factura
+     *
      * @field DescripcionOperacion
      */
     #[Assert\NotBlank]
@@ -33,6 +37,7 @@ class RegistrationRecord extends Record {
 
     /**
      * Desglose de la factura
+     *
      * @var BreakdownDetails[]
      * @field Desglose
      */
@@ -42,6 +47,7 @@ class RegistrationRecord extends Record {
 
     /**
      * Importe total de la cuota (sumatorio de la Cuota Repercutida y Cuota de Recargo de Equivalencia)
+     *
      * @field CuotaTotal
      */
     #[Assert\NotBlank]
@@ -50,6 +56,7 @@ class RegistrationRecord extends Record {
 
     /**
      * Importe total de la factura
+     *
      * @field ImporteTotal
      */
     #[Assert\NotBlank]

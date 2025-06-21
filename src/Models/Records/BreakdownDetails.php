@@ -2,14 +2,17 @@
 namespace Verifactu\Models\Records;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Verifactu\Models\Model;
 
 /**
  * Detalle de desglose
+ *
  * @field DetalleDesglose
  */
-class BreakdownDetails {
+class BreakdownDetails extends Model {
     /**
      * Impuesto de aplicación
+     *
      * @field Impuesto
      */
     #[Assert\NotBlank]
@@ -17,6 +20,7 @@ class BreakdownDetails {
 
     /**
      * Clave que identifica el tipo de régimen del impuesto o una operación con trascendencia tributaria
+     *
      * @field ClaveRegimen
      */
     #[Assert\NotBlank]
@@ -24,6 +28,7 @@ class BreakdownDetails {
 
     /**
      * Clave de la operación sujeta y no exenta o de la operación no sujeta
+     *
      * @field CalificacionOperacion
      */
     #[Assert\NotBlank]
@@ -31,6 +36,7 @@ class BreakdownDetails {
 
     /**
      * Porcentaje aplicado sobre la base imponible para calcular la cuota
+     *
      * @field TipoImpositivo
      */
     #[Assert\NotBlank]
@@ -39,6 +45,7 @@ class BreakdownDetails {
 
     /**
      * Magnitud dineraria sobre la que se aplica el tipo impositivo / Importe no sujeto
+     *
      * @field BaseImponibleOimporteNoSujeto
      */
     #[Assert\NotBlank]
@@ -47,6 +54,7 @@ class BreakdownDetails {
 
     /**
      * Cuota resultante de aplicar a la base imponible el tipo impositivo
+     *
      * @field CuotaRepercutida
      */
     #[Assert\NotBlank]
