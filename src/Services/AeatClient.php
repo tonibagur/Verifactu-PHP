@@ -112,6 +112,22 @@ class AeatClient {
             $recordElement->add('sum1:TipoFactura', $record->invoiceType->value);
             $recordElement->add('sum1:DescripcionOperacion', $record->description);
 
+            if (count($record->recipients) > 0) {
+                $destinatariosElement = $recordElement->add('sum1:Destinatarios');
+                foreach ($record->recipients as $recipient) {
+                    $destinatarioElement = $destinatariosElement->add('sum1:IDDestinatario');
+                    $destinatarioElement->add('sum1:NombreRazon', $recipient->name);
+                    if ($recipient instanceof FiscalIdentifier) {
+                        $destinatarioElement->add('sum1:NIF', $recipient->nif);
+                    } else {
+                        $idOtroElement = $destinatarioElement->add('sum1:IDOtro');
+                        $idOtroElement->add('sum1:CodigoPais', $recipient->country);
+                        $idOtroElement->add('sum1:IDType', $recipient->type->value);
+                        $idOtroElement->add('sum1:ID', $recipient->value);
+                    }
+                }
+            }
+
             $desgloseElement = $recordElement->add('sum1:Desglose');
             foreach ($record->breakdown as $breakdownDetails) {
                 $detalleDesgloseElement = $desgloseElement->add('sum1:DetalleDesglose');

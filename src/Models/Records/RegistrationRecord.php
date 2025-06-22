@@ -37,6 +37,16 @@ class RegistrationRecord extends Record {
     public string $description;
 
     /**
+     * Destinatarios de la factura
+     *
+     * @var array<FiscalIdentifier | ForeignFiscalIdentifier>
+     * @field Destinatarios
+     */
+    #[Assert\Valid]
+    #[Assert\Count(max: 1000)]
+    public array $recipients = [];
+
+    /**
      * Desglose de la factura
      *
      * @var BreakdownDetails[]
@@ -116,6 +126,26 @@ class RegistrationRecord extends Record {
             $bestTotalAmount = number_format($bestTotalAmount, 2, '.', '');
             $context->buildViolation("Expected total amount of $bestTotalAmount, got {$this->totalAmount}")
                 ->atPath('totalAmount')
+                ->addViolation();
+        }
+    }
+
+    #[Assert\Callback]
+    final public function validateRecipients(ExecutionContextInterface $context): void {
+        if (!isset($this->invoiceType)) {
+            return;
+        }
+
+        $hasRecipients = count($this->recipients) > 0;
+        if ($this->invoiceType === InvoiceType::Simplificada || $this->invoiceType === InvoiceType::R5) {
+            if ($hasRecipients) {
+                $context->buildViolation('This type of invoice cannot have recipients')
+                    ->atPath('recipients')
+                    ->addViolation();
+            }
+        } elseif (!$hasRecipients) {
+            $context->buildViolation('This type of invoice requires at least one recipient')
+                ->atPath('recipients')
                 ->addViolation();
         }
     }
