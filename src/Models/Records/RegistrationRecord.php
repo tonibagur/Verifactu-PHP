@@ -2,6 +2,7 @@
 namespace josemmo\Verifactu\Models\Records;
 
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Registro de alta de una factura
@@ -77,5 +78,45 @@ class RegistrationRecord extends Record {
         $payload .= '&Huella=' . ($this->previousHash ?? '');
         $payload .= '&FechaHoraHusoGenRegistro=' . $this->hashedAt->format('c');
         return strtoupper(hash('sha256', $payload));
+    }
+
+    #[Assert\Callback]
+    final public function validateTotals(ExecutionContextInterface $context): void {
+        if (!isset($this->breakdown) || !isset($this->totalTaxAmount) || !isset($this->totalAmount)) {
+            return;
+        }
+
+        $expectedTotalTaxAmount = 0;
+        $totalBaseAmount = 0;
+        foreach ($this->breakdown as $details) {
+            if (!isset($details->taxAmount) || !isset($details->baseAmount)) {
+                return;
+            }
+            $expectedTotalTaxAmount += $details->taxAmount;
+            $totalBaseAmount += $details->baseAmount;
+        }
+
+        $expectedTotalTaxAmount = number_format($expectedTotalTaxAmount, 2, '.', '');
+        if ($this->totalTaxAmount !== $expectedTotalTaxAmount) {
+            $context->buildViolation("Expected total tax amount of $expectedTotalTaxAmount, got {$this->totalTaxAmount}")
+                ->atPath('totalTaxAmount')
+                ->addViolation();
+        }
+
+        $validTotalAmount = false;
+        $bestTotalAmount = $totalBaseAmount + $expectedTotalTaxAmount;
+        foreach ([0, -0.01, 0.01, -0.02, 0.02] as $tolerance) {
+            $expectedTotalAmount = number_format($bestTotalAmount + $tolerance, 2, '.', '');
+            if ($this->totalAmount === $expectedTotalAmount) {
+                $validTotalAmount = true;
+                break;
+            }
+        }
+        if (!$validTotalAmount) {
+            $bestTotalAmount = number_format($bestTotalAmount, 2, '.', '');
+            $context->buildViolation("Expected total amount of $bestTotalAmount, got {$this->totalAmount}")
+                ->atPath('totalAmount')
+                ->addViolation();
+        }
     }
 }
