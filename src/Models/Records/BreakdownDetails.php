@@ -50,7 +50,7 @@ class BreakdownDetails extends Model {
      * @field BaseImponibleOimporteNoSujeto
      */
     #[Assert\NotBlank]
-    #[Assert\Regex(pattern: '/^\d{1,12}\.\d{2}$/')]
+    #[Assert\Regex(pattern: '/^-?\d{1,12}\.\d{2}$/')]
     public string $baseAmount;
 
     /**
@@ -59,7 +59,7 @@ class BreakdownDetails extends Model {
      * @field CuotaRepercutida
      */
     #[Assert\NotBlank]
-    #[Assert\Regex(pattern: '/^\d{1,12}\.\d{2}$/')]
+    #[Assert\Regex(pattern: '/^-?\d{1,12}\.\d{2}$/')]
     public string $taxAmount;
 
     #[Assert\Callback]
