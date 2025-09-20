@@ -13,7 +13,7 @@ Asegúrate de que tu entorno de ejecución cumple los siguientes requisitos:
 
 Puedes instalar la librería utilizando el gestor de dependencias [Composer](https://getcomposer.org/):
 ```sh
-composer require verifactu-php
+composer require josemmo/verifactu-php
 ```
 
 ## Ejemplo de uso
