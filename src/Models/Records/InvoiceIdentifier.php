@@ -2,8 +2,8 @@
 namespace josemmo\Verifactu\Models\Records;
 
 use DateTimeImmutable;
-use Symfony\Component\Validator\Constraints as Assert;
 use josemmo\Verifactu\Models\Model;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Identificador de factura

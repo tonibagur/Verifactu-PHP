@@ -5,8 +5,8 @@ use DateTimeImmutable;
 use josemmo\Verifactu\Exceptions\InvalidModelException;
 use josemmo\Verifactu\Models\Records\CancellationRecord;
 use josemmo\Verifactu\Models\Records\InvoiceIdentifier;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
+use PHPUnit\Framework\TestCase;
 
 final class CancellationRecordTest extends TestCase {
     #[DoesNotPerformAssertions]

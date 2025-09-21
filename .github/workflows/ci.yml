@@ -30,9 +30,13 @@ jobs:
       - name: Setup Composer
         run: composer install
 
+      # Run linter
+      - name: Run linter
+        run: composer lint -- --test -v
+
       # Run static analyzer
       - name: Run static analyzer
-        run: composer lint
+        run: composer stan
 
       # Run tests
       - name: Run tests

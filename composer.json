@@ -12,7 +12,8 @@
         }
     ],
     "scripts": {
-        "lint": "composer validate --strict && phpstan analyse",
+        "lint": "pint",
+        "stan": "composer validate --strict && phpstan analyse",
         "test": "phpunit --testdox --colors=always tests"
     },
     "autoload": {
@@ -36,6 +37,7 @@
         "sort-packages": true
     },
     "require-dev": {
+        "laravel/pint": "^1.25",
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-strict-rules": "^2.0",
         "phpunit/phpunit": "^11.5|^12.3"

@@ -40,6 +40,7 @@ class RegistrationRecord extends Record {
      * Destinatarios de la factura
      *
      * @var array<FiscalIdentifier | ForeignFiscalIdentifier>
+     *
      * @field Destinatarios
      */
     #[Assert\Valid]
@@ -50,6 +51,7 @@ class RegistrationRecord extends Record {
      * Desglose de la factura
      *
      * @var BreakdownDetails[]
+     *
      * @field Desglose
      */
     #[Assert\Valid]

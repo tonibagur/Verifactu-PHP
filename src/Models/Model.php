@@ -1,8 +1,8 @@
 <?php
 namespace josemmo\Verifactu\Models;
 
-use Symfony\Component\Validator\Validation;
 use josemmo\Verifactu\Exceptions\InvalidModelException;
+use Symfony\Component\Validator\Validation;
 
 abstract class Model {
     /**

@@ -1,11 +1,11 @@
 <?php
 namespace josemmo\Verifactu\Tests\Models;
 
+use josemmo\Verifactu\Exceptions\InvalidModelException;
+use josemmo\Verifactu\Models\Model;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Validator\Constraints as Assert;
-use josemmo\Verifactu\Exceptions\InvalidModelException;
-use josemmo\Verifactu\Models\Model;
 
 class SampleModel extends Model {
     #[Assert\NotBlank]

@@ -2,12 +2,12 @@
 namespace josemmo\Verifactu\Tests\Models\Records;
 
 use josemmo\Verifactu\Exceptions\InvalidModelException;
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use josemmo\Verifactu\Models\Records\BreakdownDetails;
 use josemmo\Verifactu\Models\Records\OperationType;
 use josemmo\Verifactu\Models\Records\RegimeType;
 use josemmo\Verifactu\Models\Records\TaxType;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
+use PHPUnit\Framework\TestCase;
 
 final class BreakdownDetailsTest extends TestCase {
     #[DoesNotPerformAssertions]

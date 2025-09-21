@@ -1,8 +1,8 @@
 <?php
 namespace josemmo\Verifactu\Models\Records;
 
-use Symfony\Component\Validator\Constraints as Assert;
 use josemmo\Verifactu\Models\Model;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Identificador fiscal

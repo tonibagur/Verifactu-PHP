@@ -1,9 +1,9 @@
 <?php
 namespace josemmo\Verifactu\Models\Records;
 
+use josemmo\Verifactu\Models\Model;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
-use josemmo\Verifactu\Models\Model;
 
 /**
  * Identificador fiscal de fuera de España
