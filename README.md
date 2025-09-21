@@ -78,7 +78,7 @@ $client = new AeatClient(
     'contraseña',
 );
 $client->setProduction(false); // <-- para usar el entorno de preproducción
-$res = $client->sendRegistrationRecords([$record]);
+$res = $client->send([$record]);
 
 // Obtiene la respuesta
 echo $res->asXML() . "\n";
