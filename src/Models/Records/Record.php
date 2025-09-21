@@ -60,7 +60,7 @@ abstract class Record extends Model {
     abstract public function calculateHash(): string;
 
     #[Assert\Callback]
-    public function validatePreviousInvoice(ExecutionContextInterface $context): void {
+    final public function validatePreviousInvoice(ExecutionContextInterface $context): void {
         if ($this->previousInvoiceId !== null && $this->previousHash === null) {
             $context->buildViolation('Previous hash is required if previous invoice ID is provided')
                 ->atPath('previousHash')

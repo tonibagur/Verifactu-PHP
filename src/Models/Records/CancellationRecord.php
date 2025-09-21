@@ -24,7 +24,7 @@ class CancellationRecord extends Record {
     }
 
     #[Assert\Callback]
-    public function validatePreviousInvoice(ExecutionContextInterface $context): void {
+    final public function validateEnforcePreviousInvoice(ExecutionContextInterface $context): void {
         if ($this->previousInvoiceId === null) {
             $context->buildViolation('Previous invoice ID is required for all cancellation records')
                 ->atPath('previousInvoiceId')
