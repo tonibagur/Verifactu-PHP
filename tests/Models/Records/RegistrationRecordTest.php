@@ -3,18 +3,18 @@ namespace josemmo\Verifactu\Tests\Models\Records;
 
 use DateTimeImmutable;
 use josemmo\Verifactu\Exceptions\InvalidModelException;
+use josemmo\Verifactu\Models\Records\BreakdownDetails;
 use josemmo\Verifactu\Models\Records\FiscalIdentifier;
 use josemmo\Verifactu\Models\Records\ForeignFiscalIdentifier;
 use josemmo\Verifactu\Models\Records\ForeignIdType;
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
-use josemmo\Verifactu\Models\Records\BreakdownDetails;
 use josemmo\Verifactu\Models\Records\InvoiceIdentifier;
 use josemmo\Verifactu\Models\Records\InvoiceType;
 use josemmo\Verifactu\Models\Records\OperationType;
 use josemmo\Verifactu\Models\Records\RegimeType;
 use josemmo\Verifactu\Models\Records\RegistrationRecord;
 use josemmo\Verifactu\Models\Records\TaxType;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 
 final class RegistrationRecordTest extends TestCase {
     public function testCalculatesHashForFirstRecord(): void {
