@@ -12,6 +12,7 @@ use josemmo\Verifactu\Models\Records\InvoiceType;
 use josemmo\Verifactu\Models\Records\OperationType;
 use josemmo\Verifactu\Models\Records\RegimeType;
 use josemmo\Verifactu\Models\Records\RegistrationRecord;
+use josemmo\Verifactu\Models\Records\RectificationType;
 use josemmo\Verifactu\Models\Records\TaxType;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\TestCase;
@@ -176,6 +177,75 @@ final class RegistrationRecordTest extends TestCase {
         $record->recipients[1]->country = 'PT';
         $record->recipients[1]->type = ForeignIdType::VAT;
         $record->recipients[1]->value = 'PT999999999';
+        $record->hash = $record->calculateHash();
+        $record->validate();
+    }
+
+    public function testValidatesRectificationType(): void {
+        $record = new RegistrationRecord();
+        $record->invoiceId = new InvoiceIdentifier();
+        $record->invoiceId->issuerId = 'A00000000';
+        $record->invoiceId->invoiceNumber = 'RECT-0001';
+        $record->invoiceId->issueDate = new DateTimeImmutable('2025-06-01');
+        $record->issuerName = 'Perico de los Palotes, S.A.';
+        $record->description = 'Factura rectificativa de prueba';
+        $record->breakdown[0] = new BreakdownDetails();
+        $record->breakdown[0]->taxType = TaxType::IVA;
+        $record->breakdown[0]->regimeType = RegimeType::C01;
+        $record->breakdown[0]->operationType = OperationType::S1;
+        $record->breakdown[0]->taxRate = '21.00';
+        $record->breakdown[0]->baseAmount = '10.00';
+        $record->breakdown[0]->taxAmount = '2.10';
+        $record->totalTaxAmount = '2.10';
+        $record->totalAmount = '12.10';
+        $record->previousInvoiceId = null;
+        $record->previousHash = null;
+        $record->hashedAt = new DateTimeImmutable('2025-06-01T20:30:40+02:00');
+
+        // Test rectificative invoice R1 without rectificationType (should fail)
+        $record->invoiceType = InvoiceType::R1;
+        $record->recipients[0] = new FiscalIdentifier('Cliente Test', 'B12345678');
+        $record->hash = $record->calculateHash();
+
+        try {
+            $record->validate();
+            $this->fail('Did not throw exception for missing rectificationType in R1 invoice');
+        } catch (InvalidModelException $e) {
+            $this->assertStringContainsString('rectification type', $e->getMessage());
+        }
+
+        // Test rectificative invoice R1 with rectificationType PorSustitucion (should pass)
+        $record->rectificationType = RectificationType::PorSustitucion;
+        $record->hash = $record->calculateHash();
+        $record->validate();
+
+        // Test rectificative invoice R1 with rectificationType PorDiferencias (should pass)
+        $record->rectificationType = RectificationType::PorDiferencias;
+        $record->hash = $record->calculateHash();
+        $record->validate();
+
+        // Test rectificative invoice R5 with rectificationType (should pass)
+        $record->invoiceType = InvoiceType::R5;
+        $record->recipients = []; // R5 invoices don't need recipients
+        $record->rectificationType = RectificationType::PorSustitucion;
+        $record->hash = $record->calculateHash();
+        $record->validate();
+
+        // Test non-rectificative invoice with rectificationType (should fail)
+        $record->invoiceType = InvoiceType::Simplificada;
+        $record->rectificationType = RectificationType::PorSustitucion;
+        $record->hash = $record->calculateHash();
+
+        try {
+            $record->validate();
+            $this->fail('Did not throw exception for rectificationType in non-rectificative invoice');
+        } catch (InvalidModelException $e) {
+            $this->assertStringContainsString('Only rectificative invoices', $e->getMessage());
+        }
+
+        // Test non-rectificative invoice without rectificationType (should pass)
+        $record->invoiceType = InvoiceType::Simplificada;
+        $record->rectificationType = null;
         $record->hash = $record->calculateHash();
         $record->validate();
     }
