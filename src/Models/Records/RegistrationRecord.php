@@ -48,6 +48,16 @@ class RegistrationRecord extends Record {
     public array $recipients = [];
 
     /**
+     * Tipo de rectificación
+     *
+     * Obligatorio para facturas rectificativas (R1, R2, R3, R4, R5)
+     * Según normativa VERI*FACTU actualizada de 2024
+     *
+     * @field TipoRectificativa
+     */
+    public ?RectificationType $rectificationType = null;
+
+    /**
      * Desglose de la factura
      *
      * @var BreakdownDetails[]
@@ -148,6 +158,31 @@ class RegistrationRecord extends Record {
         } elseif (!$hasRecipients) {
             $context->buildViolation('This type of invoice requires at least one recipient')
                 ->atPath('recipients')
+                ->addViolation();
+        }
+    }
+
+    #[Assert\Callback]
+    final public function validateRectificationType(ExecutionContextInterface $context): void {
+        if (!isset($this->invoiceType)) {
+            return;
+        }
+
+        $isRectificativeInvoice = in_array($this->invoiceType, [
+            InvoiceType::R1,
+            InvoiceType::R2,
+            InvoiceType::R3,
+            InvoiceType::R4,
+            InvoiceType::R5
+        ], true);
+
+        if ($isRectificativeInvoice && $this->rectificationType === null) {
+            $context->buildViolation('Rectificative invoices require a rectification type (TipoRectificativa)')
+                ->atPath('rectificationType')
+                ->addViolation();
+        } elseif (!$isRectificativeInvoice && $this->rectificationType !== null) {
+            $context->buildViolation('Only rectificative invoices can have a rectification type')
+                ->atPath('rectificationType')
                 ->addViolation();
         }
     }

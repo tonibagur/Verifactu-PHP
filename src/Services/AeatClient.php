@@ -184,6 +184,12 @@ class AeatClient {
 
         $recordElement->add('sum1:NombreRazonEmisor', $record->issuerName);
         $recordElement->add('sum1:TipoFactura', $record->invoiceType->value);
+
+        // TipoRectificativa es obligatorio para facturas rectificativas (nueva normativa 2024)
+        if ($record->rectificationType !== null) {
+            $recordElement->add('sum1:TipoRectificativa', $record->rectificationType->value);
+        }
+
         $recordElement->add('sum1:DescripcionOperacion', $record->description);
 
         if (count($record->recipients) > 0) {
