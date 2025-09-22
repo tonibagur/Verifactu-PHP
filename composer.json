@@ -1,14 +1,14 @@
 {
     "name": "josemmo/verifactu-php",
-    "description": "Librería para la implementación del sistema VERI*FACTU de la AEAT española",
+    "description": "Librería para la implementación del sistema VERI*FACTU de la AEAT española(fork de https://github.com/josenmo/Verifactu-PHP)",
     "keywords": ["verifactu", "aeat", "sii"],
     "license": "MIT",
-    "homepage": "https://github.com/josemmo/Verifactu-PHP",
+    "homepage": "https://github.com/tonibagur/Verifactu-PHP",
     "authors": [
         {
-            "name": "josemmo",
-            "email": "josemmo@pm.me",
-            "homepage": "https://github.com/josemmo"
+            "name": "tonibagur",
+            "email": "toni@inmatic.ai",
+            "homepage": "https://github.com/tonibagur"
         }
     ],
     "scripts": {
@@ -18,12 +18,12 @@
     },
     "autoload": {
         "psr-4": {
-            "josemmo\\Verifactu\\": "src/"
+            "tonibagur\\Verifactu\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "josemmo\\Verifactu\\Tests\\": "tests/"
+            "tonibagur\\Verifactu\\Tests\\": "tests/"
         }
     },
     "require": {
