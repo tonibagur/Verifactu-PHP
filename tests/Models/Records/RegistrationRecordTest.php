@@ -4,6 +4,7 @@ namespace josemmo\Verifactu\Tests\Models\Records;
 use DateTimeImmutable;
 use josemmo\Verifactu\Exceptions\InvalidModelException;
 use josemmo\Verifactu\Models\Records\BreakdownDetails;
+use josemmo\Verifactu\Models\Records\CorrectiveType;
 use josemmo\Verifactu\Models\Records\FiscalIdentifier;
 use josemmo\Verifactu\Models\Records\ForeignFiscalIdentifier;
 use josemmo\Verifactu\Models\Records\ForeignIdType;
@@ -12,7 +13,6 @@ use josemmo\Verifactu\Models\Records\InvoiceType;
 use josemmo\Verifactu\Models\Records\OperationType;
 use josemmo\Verifactu\Models\Records\RegimeType;
 use josemmo\Verifactu\Models\Records\RegistrationRecord;
-use josemmo\Verifactu\Models\Records\RectificationType;
 use josemmo\Verifactu\Models\Records\TaxType;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\TestCase;
@@ -181,7 +181,7 @@ final class RegistrationRecordTest extends TestCase {
         $record->validate();
     }
 
-    public function testValidatesRectificationType(): void {
+    public function testValidatesCorrectiveType(): void {
         $record = new RegistrationRecord();
         $record->invoiceId = new InvoiceIdentifier();
         $record->invoiceId->issuerId = 'A00000000';
@@ -189,6 +189,7 @@ final class RegistrationRecordTest extends TestCase {
         $record->invoiceId->issueDate = new DateTimeImmutable('2025-06-01');
         $record->issuerName = 'Perico de los Palotes, S.A.';
         $record->description = 'Factura rectificativa de prueba';
+        $record->recipients[0] = new FiscalIdentifier('Antonio García Pérez', '00000000A');
         $record->breakdown[0] = new BreakdownDetails();
         $record->breakdown[0]->taxType = TaxType::IVA;
         $record->breakdown[0]->regimeType = RegimeType::C01;
@@ -202,50 +203,31 @@ final class RegistrationRecordTest extends TestCase {
         $record->previousHash = null;
         $record->hashedAt = new DateTimeImmutable('2025-06-01T20:30:40+02:00');
 
-        // Test rectificative invoice R1 without rectificationType (should fail)
+        // Missing corrective type
         $record->invoiceType = InvoiceType::R1;
-        $record->recipients[0] = new FiscalIdentifier('Cliente Test', 'B12345678');
+        $record->correctiveType = null;
         $record->hash = $record->calculateHash();
-
         try {
             $record->validate();
-            $this->fail('Did not throw exception for missing rectificationType in R1 invoice');
+            $this->fail('Did not throw exception for missing corrective type');
         } catch (InvalidModelException $e) {
-            $this->assertStringContainsString('rectification type', $e->getMessage());
+            $this->assertStringContainsString('Missing type for corrective invoice', $e->getMessage());
         }
 
-        // Test rectificative invoice R1 with rectificationType PorSustitucion (should pass)
-        $record->rectificationType = RectificationType::PorSustitucion;
+        // Unnecessary corrective type
+        $record->invoiceType = InvoiceType::Factura;
+        $record->correctiveType = CorrectiveType::Substitution;
         $record->hash = $record->calculateHash();
-        $record->validate();
-
-        // Test rectificative invoice R1 with rectificationType PorDiferencias (should pass)
-        $record->rectificationType = RectificationType::PorDiferencias;
-        $record->hash = $record->calculateHash();
-        $record->validate();
-
-        // Test rectificative invoice R5 with rectificationType (should pass)
-        $record->invoiceType = InvoiceType::R5;
-        $record->recipients = []; // R5 invoices don't need recipients
-        $record->rectificationType = RectificationType::PorSustitucion;
-        $record->hash = $record->calculateHash();
-        $record->validate();
-
-        // Test non-rectificative invoice with rectificationType (should fail)
-        $record->invoiceType = InvoiceType::Simplificada;
-        $record->rectificationType = RectificationType::PorSustitucion;
-        $record->hash = $record->calculateHash();
-
         try {
             $record->validate();
-            $this->fail('Did not throw exception for rectificationType in non-rectificative invoice');
+            $this->fail('Did not throw exception for unnecessary corrective type');
         } catch (InvalidModelException $e) {
-            $this->assertStringContainsString('Only rectificative invoices', $e->getMessage());
+            $this->assertStringContainsString('This type of invoice cannot have a corrective type', $e->getMessage());
         }
 
-        // Test non-rectificative invoice without rectificationType (should pass)
-        $record->invoiceType = InvoiceType::Simplificada;
-        $record->rectificationType = null;
+        // Throws no exception
+        $record->invoiceType = InvoiceType::R2;
+        $record->correctiveType = CorrectiveType::Substitution;
         $record->hash = $record->calculateHash();
         $record->validate();
     }
